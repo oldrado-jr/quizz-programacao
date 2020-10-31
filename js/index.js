@@ -1,7 +1,5 @@
 // Declaração de variáveis
 const answersBox = document.querySelector('#answers-box');
-const question = document.querySelector('#question');
-const letters = ['a', 'b', 'c', 'd'];
 let points = 0;
 let actualQuestion = 0;
 
@@ -87,11 +85,14 @@ function createQuestion(i) {
     });
 
     // Altera o texto da pergunta
+    const question = document.querySelector('#question');
     const questionText = question.querySelector('#question-text');
     const questionNumber = question.querySelector('#question-number');
 
     questionText.textContent = questions[i].question;
     questionNumber.textContent = i + 1;
+
+    const letters = ['a', 'b', 'c', 'd'];
 
     // Insere as alternativas
     questions[i].answers.forEach((answer, i) => {
@@ -155,10 +156,41 @@ function nextQuestion() {
         // Verifica se ainda há preguntas
         if (actualQuestion >= questions.length) {
             // Exibe a mensagem de sucesso
+            showSuccessMessage();
+            return;
         }
 
         createQuestion(actualQuestion);
     }, 1500);
+}
+
+// Exibe a tela final
+function showSuccessMessage() {
+    toggleQuizz();
+
+    // Troca dados da tela de sucesso
+
+    // Calcula o score
+    const score = ((points / questions.length) * 100).toFixed(2);
+
+    const displayScore = document.querySelector('#display-score span');
+    displayScore.textContent = score.toString();
+
+    // Altera o número de perguntas corretas
+    const correctAnswers = document.querySelector('#correct-answers');
+    correctAnswers.textContent = points;
+
+    // Altera o total de perguntas
+    const totalQuestions = document.querySelector('#questions-qty');
+    totalQuestions.textContent = questions.length;
+}
+
+// Mostra ou esconde o score
+function toggleQuizz() {
+    const quizzContainer = document.querySelector('#quizz-container');
+    const scoreContainer = document.querySelector('#score-container');
+    quizzContainer.classList.toggle('hide');
+    scoreContainer.classList.toggle('hide');
 }
 
 // Inicialização do Quizz
