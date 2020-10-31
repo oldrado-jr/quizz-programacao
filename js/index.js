@@ -193,5 +193,14 @@ function toggleQuizz() {
     scoreContainer.classList.toggle('hide');
 }
 
+// Reiniciar Quizz
+document.querySelector('#restart').addEventListener('click', () => {
+    // Zera o jogo
+    actualQuestion = 0;
+    points = 0;
+    toggleQuizz();
+    init();
+});
+
 // Inicialização do Quizz
 init();
