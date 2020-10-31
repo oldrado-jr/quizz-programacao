@@ -2,6 +2,7 @@
 const answersBox = document.querySelector('#answers-box');
 const question = document.querySelector('#question');
 const letters = ['a', 'b', 'c', 'd'];
+let points = 0;
 let actualQuestion = 0;
 
 // Perguntas
@@ -116,12 +117,48 @@ function createQuestion(i) {
 
         // Insere um evento de click no botão
         answerTemplate.addEventListener('click', function () {
-            console.log(this);
+            checkAnswer(this);
         });
     });
 
     // Incrementa o número da questão
     actualQuestion++;
+}
+
+// Verifica resposta do usuário
+function checkAnswer(btn) {
+    // Seleciona todos os botões
+    const buttons = answersBox.querySelectorAll('button');
+
+    // Verifica se a resposta está correta e adiciona classes nos botões
+    buttons.forEach((button) => {
+        if (button.getAttribute('correct-answer') === 'true') {
+            button.classList.add('correct-answer');
+
+            // Verifica se o usuário acertou a pergunta
+            if (btn == button) {
+                points++;
+            }
+        } else {
+            button.classList.add('wrong-answer');
+        }
+    });
+
+    // Exibe a próxima pergunta
+    nextQuestion();
+}
+
+// Exibe a próxima pergunta no Quizz
+function nextQuestion() {
+    // Timer para usuário ver as respostas
+    setTimeout(() => {
+        // Verifica se ainda há preguntas
+        if (actualQuestion >= questions.length) {
+            // Exibe a mensagem de sucesso
+        }
+
+        createQuestion(actualQuestion);
+    }, 1500);
 }
 
 // Inicialização do Quizz
